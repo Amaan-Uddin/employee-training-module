@@ -6,6 +6,7 @@ connectToDB()
 
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const authRoute = require('./src/routes/auth')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -23,6 +24,7 @@ app.use(
 		credentials: true,
 	})
 )
+app.use('/auth', authRoute)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

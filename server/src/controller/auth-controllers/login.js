@@ -7,7 +7,7 @@ module.exports = async function login(req, res) {
 		const { email, password } = req.body
 		if (!email || !password) return res.status(400).json({ error: 'Bad request, some fields are missing.' })
 
-		const user = await fetchUser(email)
+		const user = await fetchUser({ email: email })
 		if (!user) return res.status(404).json({ error: 'Not found, user does not exist.' })
 
 		const passwordIsCorrect = await bcrypt.compare(password, user.password)

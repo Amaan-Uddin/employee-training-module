@@ -6,7 +6,7 @@ module.exports = async function authenticateUser(req, res, next) {
 		const accessToken = req.cookies?.accessToken
 		if (!accessToken) throw Object.assign(new Error('No access token'), { name: 'JsonWebTokenError' })
 		const decode = verifyAccessToken(accessToken)
-		console.log('AuthenticateUser :: accessToken :: ', decode)
+		// console.log('AuthenticateUser :: accessToken :: ', decode)
 		req.user = decode.data
 		next()
 	} catch (error) {
