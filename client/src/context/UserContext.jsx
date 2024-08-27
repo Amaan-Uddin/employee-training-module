@@ -15,9 +15,8 @@ export function UserProvider({ children }) {
 		async function fetchCurrentUser() {
 			try {
 				const response = await authInstance.getCurrentUser()
-				console.log(response)
+				console.log(response, 'helllo')
 				setUser({ ...response, loggedIn: true })
-				navigate('/home')
 			} catch (error) {
 				console.error(error)
 				navigate('/')

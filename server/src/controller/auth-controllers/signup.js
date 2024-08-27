@@ -1,4 +1,5 @@
 const User = require('../../model/Users')
+const Task = require('../../model/Task')
 const bcrypt = require('bcrypt')
 const fetchUser = require('../../utils/functions/userFunc')
 const { signAccessToken, signRefreshToken } = require('../../utils/functions/signTokens')
@@ -18,7 +19,7 @@ module.exports = async function signup(req, res) {
 			email: email,
 			password: hashPassword,
 		})
-
+		await Task.create({ userId: newUser._id })
 		const accessToken = signAccessToken({
 			data: { _id: newUser._id, email: newUser.email, name: newUser.name },
 		})

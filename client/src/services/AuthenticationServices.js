@@ -1,43 +1,22 @@
-export class AuthenticationServices {
-	#baseurl // private
+import { BaseService } from './BaseService'
+
+class AuthenticationServices extends BaseService {
 	constructor() {
-		this.#baseurl = import.meta.env.VITE_BASE_URL
+		super('/auth')
 	}
-	async signup(data) {
-		return await this.#responseHandler(data, 'POST', '/signup')
+	signup(data) {
+		return this.post('/signup', data)
 	}
-	async login(data) {
-		return await this.#responseHandler(data, 'POST', '/login')
+	login(data) {
+		return this.post('/login', data)
 	}
-	async logout() {
-		return await this.#responseHandler(null, 'GET', '/logout')
+	logout() {
+		return this.post('/logout', null)
 	}
-	async getCurrentUser() {
-		return await this.#responseHandler(null, 'GET', '/current')
-	}
-	async #responseHandler(data, method, endpoint) {
-		try {
-			const response = await fetch(`${this.#baseurl}/auth${endpoint}`, {
-				method: method,
-				...(data && {
-					body: JSON.stringify(data),
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}),
-				credentials: 'include',
-			})
-			const responseMsg = await response.json()
-			if (!response.ok) {
-				throw new Error(responseMsg.error || 'Something went wrong.')
-			}
-			return responseMsg
-		} catch (error) {
-			throw new Error(error.message || 'An unknown error occurred in auth service.')
-		}
+	getCurrentUser() {
+		return this.get('/current')
 	}
 }
 
 const authInstance = new AuthenticationServices()
-
 export default authInstance

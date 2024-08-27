@@ -19,7 +19,7 @@ module.exports = async function authenticateUser(req, res, next) {
 			try {
 				const newAccessToken = await refreshAccessToken(refreshToken)
 				const decode = verifyAccessToken(newAccessToken)
-				console.log('AuthenticateUser :: new accessToken :: ', decode)
+				// console.log('AuthenticateUser :: new accessToken :: ', decode)
 				res.cookie('accessToken', newAccessToken, { httpOnly: true })
 				req.user = decode.data
 				next()
